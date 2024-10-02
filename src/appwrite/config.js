@@ -114,6 +114,13 @@ export class Service{
         }
     }
 
+    getFilePreview(fileId){
+        return this.bucket.getFilePreview(
+            conf.appwriteBucketId,
+            fileId
+        )
+    }
+
     async deleteFile(fileID){
         try {
             return await this.bucket.deleteFile(
