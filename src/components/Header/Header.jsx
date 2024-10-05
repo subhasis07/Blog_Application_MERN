@@ -38,12 +38,16 @@ function Header(){
         <header className='py-3 shadow bg-gray-500'>
         <Container>
             <nav className='flex'>
+                {/* header-logo */}
                 <div className='mr-4'>
                     <Link to='/'>
                         <Logo width='70px'   />
 
                     </Link>
                 </div>
+
+                {/* header-items */}
+
                 <ul className='flex ml-auto'>
                     {navItems.map((item) => item.active ? (
                         <li key={item.name}>
@@ -54,6 +58,8 @@ function Header(){
                         </li>
                     ) : null
                     )}
+
+                    {/* logout btn absed on authenticated or not */}
                     {authStatus && (
                         <li>
                             <LogOutBtn />
