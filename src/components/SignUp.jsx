@@ -4,7 +4,7 @@ import { Link,useNavigate } from "react-router-dom";
 import { login } from "../store/authSlice";
 import {Button,Logo,Input} from './index'
 import { useDispatch } from "react-redux";
-import {useForm} from 'react-router-dom';
+import {useForm} from 'react-hook-form';
 
 function SignUp(){
 
@@ -49,7 +49,7 @@ function SignUp(){
                 </p>
                 {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
 
-                <form onSubmit={handleSubmit(create)}>
+                <form onSubmit={handleSubmit(createAcc)}>
                     <div className='space-y-5'>
                         <Input
                         label="Full Name: "
