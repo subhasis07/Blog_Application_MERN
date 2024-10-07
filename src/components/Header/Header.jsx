@@ -9,6 +9,8 @@ function Header(){
     const authStatus=useSelector((state)=>state.auth.status)
     const navigate=useNavigate();
     
+    // Navigation items configuration
+
     const navItems=[
         {
             name: 'Home',
@@ -48,7 +50,7 @@ function Header(){
                     </Link>
                 </div>
 
-                {/* header-items */}
+                 {/* Navigation links */}
 
                 <ul className='flex ml-auto'>
                     {navItems.map((item) => item.active ? (

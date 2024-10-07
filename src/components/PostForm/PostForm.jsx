@@ -5,7 +5,10 @@ import appwriteService from "../../appwrite/config";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
+// PostForm component for creating or updating posts
 export default function PostForm({post}){
+
+     // Form setup with default values from post if available
     const{ register, handleSubmit, watch, setValue, control, getValues}= useForm({
         defaultValues:{
             title: post?.title || "",
@@ -14,28 +17,38 @@ export default function PostForm({post}){
             status: post?.status || "active",
         }
     })
+ 
+    const navigate=useNavigate();  // Hook for navigation 
+    const userData=useSelector((state)=>state.auth.userData); // Get user data from Redux
 
-    const navigate=useNavigate();
-    const userData=useSelector((state)=>state.auth.userData);
-
+     // Form submission handler
     const submit= async(data)=>{
+
+        // If updating an existing post
         if(post){
             const file=data.image[0]?await appwriteService.uploadFile(data.image[0]): null;
 
             if(file){
-                appwriteService.deleteFile(post.featuredImage);
+                appwriteService.deleteFile(post.featuredImage); // Delete old featured image if a new one is uploaded
 
             }
 
-            const dbPost = await appwriteService.updatePost(post.$id,{
+            const dbPost = {
                 ...data,
-                featuredImage:file ? file.$id : undefined
-            })
-
-            if(dbPost){
-                navigate(`/post/${dbPost.$id}`)
+                slug: post.slug, // Ensure slug remains unchanged
+                featuredImage:file ? file.$id : undefined,
+                userId: userData.$id, // Attach userId to the post
             }
+
+            await appwriteService.updatePost(post.$id, dbPost); // Update the post in the database
+            navigate(`/post/${dbPost.$id}`); // Navigate to that posts after submission
+            
+            // if(dbPost){
+            //     navigate(`/post/${dbPost.$id}`)
+            // }
         }else{
+
+            // If creating a new post
             const file=await appwriteService.uploadFile(data.image[0]);
 
             if(file){
@@ -79,12 +92,18 @@ export default function PostForm({post}){
     return (
         <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
             <div className="w-2/3 px-2">
+
+                {/* Title input */}
+
                 <Input
                     label="Title :"
                     placeholder="Title"
                     className="mb-4"
                     {...register("title", { required: true })}
                 />
+
+                {/* Slug input */}
+                
                 <Input
                     label="Slug :"
                     placeholder="Slug"
