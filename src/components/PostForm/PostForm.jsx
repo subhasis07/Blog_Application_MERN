@@ -37,7 +37,7 @@ export default function PostForm({post}){
                 ...data,
                 slug: post.slug, // Ensure slug remains unchanged
                 featuredImage:file ? file.$id : undefined,
-                userId: userData.$id, // Attach userId to the post
+                userID: userData.$id, // Attach userId to the post
             }
 
             await appwriteService.updatePost(post.$id, dbPost); // Update the post in the database
@@ -56,7 +56,7 @@ export default function PostForm({post}){
                 data.featuredImage = fileId;
                 const dbPost = await appwriteService.createPost({ 
                     ...data, 
-                    userId: userData.$id
+                    userID: userData.$id
                 });
 
                 if (dbPost) {

@@ -1,5 +1,5 @@
 import React ,{useState} from 'react'
-import { Container, PostForm } from '../components'
+import { Container, PostCard, PostForm } from '../components'
 import appwriteService from "../appwrite/config";
 
 function AllPost() {
