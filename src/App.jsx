@@ -7,16 +7,10 @@ import { Outlet } from 'react-router-dom';
 import { login, logout } from './store/authSlice';
 
 function App() {
-<<<<<<< HEAD
 
     const [loading, setLoading] = useState(true);
     const dispatch = useDispatch();
 
-=======
-    const [loading, setLoading] = useState(true);
-    const dispatch = useDispatch();
-
->>>>>>> f622a7c0a068194dcedd5225a5c9db78c22699d1
     useEffect(() => {
         authService.getCurrentUser()
             .then((userData) => {
